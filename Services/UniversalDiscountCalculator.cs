@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata2._0.Services
 {
-    public class DiscountCalculator : ICalculate
+    public class UniversalDiscountCalculator : ICalculate
     {
         public double percentage { get; set ; }
         public double amount { get ; set ; }
         public double priceAfter { get ; set ; }
-        public DiscountCalculator(double percentage, double price)
+        public UniversalDiscountCalculator(double percentage, double price)
         {
             this.percentage = percentage;
             amount = calculateAmount(price);

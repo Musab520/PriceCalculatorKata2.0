@@ -1,4 +1,5 @@
 ﻿using PriceCalculatorKata2._0.Models;
+using PriceCalculatorKata2._0.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +12,24 @@ namespace PriceCalculatorKata2._0.Services
     {
         public Product product { get; set; }
         public ICalculate taxCalculator { get; set; }
-        public ICalculate discountCalculator { get; set; }
+        public ICalculate universalDiscountCalculator { get; set; }
+        public ICalculate upcDiscountCalculator { get; set; }
         public double finalPrice { get; set; }
-        public Receipt receipt { get { return GetReceipt(); } set { this.receipt = value; } }
 
 
-        public PriceCalculator(ICalculate taxCalculator,ICalculate discountCalculator,Product product)
+        public PriceCalculator(ICalculate taxCalculator,ICalculate universalDiscountCalculator, ICalculate upcDiscountCalculator,Product product)
         {
             this.taxCalculator = taxCalculator;
-            this.discountCalculator = discountCalculator;
+            this.universalDiscountCalculator = universalDiscountCalculator;
+            this.upcDiscountCalculator = upcDiscountCalculator;
             this.product = product;
             finalPrice = product.price;
-
-
         }
         public double CalculateFinalPrice()
         {
             finalPrice += taxCalculator.amount;
-            finalPrice-= discountCalculator.amount;
+            finalPrice-= universalDiscountCalculator.amount;
+            finalPrice -= upcDiscountCalculator.amount;
             return Math.Round(finalPrice,2);
         }
         public Receipt GetReceipt()
@@ -36,8 +37,10 @@ namespace PriceCalculatorKata2._0.Services
             Receipt receipt = new Receipt();
             receipt.taxPercentage = taxCalculator.percentage;
             receipt.tax = taxCalculator.amount;
-            receipt.discountPercentage = discountCalculator.percentage;
-            receipt.discount=discountCalculator.amount;
+            receipt.discountPercentage = universalDiscountCalculator.percentage;
+            receipt.universalDiscount= universalDiscountCalculator.amount;
+            receipt.upcDiscountPercentage = upcDiscountCalculator.percentage;
+            receipt.upcDiscount = upcDiscountCalculator.amount;
             receipt.priceAfter = CalculateFinalPrice();
             receipt.product = product;
             finalPrice = product.price;
