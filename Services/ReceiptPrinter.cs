@@ -14,12 +14,12 @@ namespace PriceCalculatorKata2._0.Services
         public void printReceiptTaxInfo(Receipt receipt) {
 
             Console.WriteLine($"Sample product: Book with name = “{receipt.product.Name}”, UPC = {receipt.product.UPC}, price ={receipt.product.currency}{receipt.product.price}." +
-                 $"\nProduct price reported as {receipt.product.currency} {receipt.product.price} before tax and {receipt.product.currency} {receipt.priceAfter} after {receipt.taxPercentage *100} % tax.");
+                 $"\nProduct price reported as {receipt.product.currency} {receipt.product.price} before tax and {receipt.product.currency} {Math.Round(receipt.priceAfter, 4)} after {receipt.taxPercentage *100} % tax.");
         }
         public void printReceiptTaxAndDiscountInfo(Receipt receipt)
         {
             Console.WriteLine($"Sample product: Book with name = “{receipt.product.Name}”, UPC = {receipt.product.UPC}, price = {receipt.product.currency} {receipt.product.price}." +
-                $"\nTax = {receipt.taxPercentage*100} %, discount = {receipt.discountPercentage*100} % Tax amount = {receipt.product.currency} {receipt.tax}; Discount amount = {receipt.product.currency} {receipt.universalDiscount}" +
+                $"\nTax = {receipt.taxPercentage*100} %, discount = {receipt.discountPercentage*100} % Tax amount = {receipt.product.currency} {Math.Round(receipt.tax,2)}; Discount amount = {receipt.product.currency} {Math.Round(receipt.universalDiscount,2)}" +
                 $"\nPrice before = {receipt.product.currency} {receipt.product.price}, price after = {receipt.product.currency} {receipt.priceAfter}");
         }
         public void printReceiptReport(Receipt receipt)
@@ -35,9 +35,9 @@ namespace PriceCalculatorKata2._0.Services
                 $"\nTax = {receipt.taxPercentage * 100} %, " +
                 $"\nUniversal Discount = {receipt.discountPercentage * 100} %" +
                 $"" +descriptions+
-                $"\nUPC Discount = {receipt.product.currency} {Math.Round(receipt.upcDiscountPercentage*100,2)}"+
-                $"\nprice= {receipt.product.currency} {receipt.priceAfter}" +
-                $"\nTotal discount= {receipt.product.currency} {receipt.universalDiscount + receipt.upcDiscount}");
+                $"\nUPC Discount = {receipt.product.currency} {Math.Round(receipt.upcDiscountPercentage*100,2)}%"+
+                $"\nprice= {receipt.product.currency} {Math.Round(receipt.priceAfter,2)}" +
+                $"\nTotal discount= {receipt.product.currency} {Math.Round(receipt.universalDiscount + receipt.upcDiscount,2)}");
         }
     }
 }
