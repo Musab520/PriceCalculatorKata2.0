@@ -14,8 +14,8 @@ namespace PriceCalculatorKata2._0.Services
         public ICalculate taxCalculator { get; set; }
         public ICalculate universalDiscountCalculator { get; set; }
         public ICalculate upcDiscountCalculator { get; set; }
+        public bool applyDiscountsBefore { get; set; } = false;
         public double finalPrice { get; set; }
-
 
         public PriceCalculator(ICalculate taxCalculator,ICalculate universalDiscountCalculator, ICalculate upcDiscountCalculator,Product product)
         {
@@ -27,9 +27,19 @@ namespace PriceCalculatorKata2._0.Services
         }
         public double CalculateFinalPrice()
         {
-            finalPrice += taxCalculator.amount;
-            finalPrice-= universalDiscountCalculator.amount;
-            finalPrice -= upcDiscountCalculator.amount;
+            if (upcDiscountCalculator.applyBeforeTaxes)
+            {
+                finalPrice -= upcDiscountCalculator.amount;
+                double tmpPrice=finalPrice;
+                finalPrice -= universalDiscountCalculator.calculateAmount(tmpPrice);
+                finalPrice += taxCalculator.calculateAmount(tmpPrice);
+            }
+            else
+            {
+                finalPrice -= upcDiscountCalculator.amount;
+                finalPrice -= universalDiscountCalculator.amount;
+                finalPrice += taxCalculator.amount;
+            }
             return Math.Round(finalPrice,2);
         }
         public Receipt GetReceipt()

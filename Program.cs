@@ -7,7 +7,7 @@ class Program{
     public static void Main()
     {
         ProductRepository productRepository = new ProductRepository();
-        UPCDiscountRepository uPCDiscountRepository = new UPCDiscountRepository();
+        DiscountRepository uPCDiscountRepository = new DiscountRepository();
 
         Product product = productRepository.productList[0];
         double taxPercentage = 0.2;

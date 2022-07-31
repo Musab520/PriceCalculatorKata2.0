@@ -11,6 +11,8 @@ namespace PriceCalculatorKata2._0.Services
         public double percentage { get; set ; }
         public double amount { get ; set ; }
         public double priceAfter { get ; set ; }
+        public bool applyBeforeTaxes { get ; set; }
+
         public UniversalDiscountCalculator(double percentage, double price)
         {
             this.percentage = percentage;
