@@ -22,5 +22,13 @@ namespace PriceCalculatorKata2._0.Services
                 $"\nTax = {receipt.taxPercentage*100} %, discount = {receipt.discountPercentage*100} % Tax amount = ${receipt.tax}; Discount amount = ${receipt.universalDiscount}" +
                 $"\nPrice before = ${receipt.product.price}, price after = ${receipt.priceAfter}");
         }
+        public void printReceiptReport(Receipt receipt)
+        {
+            Console.WriteLine($"Sample product: Title = “{receipt.product.Name}”, UPC={receipt.product.UPC}, price=${receipt.product.price}." +
+                $"Tax = {receipt.taxPercentage * 100} %, " +
+                $"discount = {receipt.discountPercentage * 100} %" +
+                $"price= ${receipt.priceAfter}" +
+                $"Total discount= ${receipt.discount}");
+        }
     }
 }
