@@ -22,8 +22,6 @@ namespace PriceCalculatorKata2._0.Services
             this.discountCalculator = discountCalculator;
             this.product = product;
             finalPrice = product.price;
-
-
         }
         public double CalculateFinalPrice()
         {
