@@ -10,7 +10,6 @@ namespace PriceCalculatorKata2._0.Services
 {
     public class ReceiptPrinter : IPrintReceipt
     {
-        public Receipt receipt { get ; set ; }
 
         public void printReceiptTaxInfo(Receipt receipt) {
 
