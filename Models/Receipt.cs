@@ -15,6 +15,8 @@ namespace PriceCalculatorKata2._0.Models
         public Product product { get; set; }
         public double tax { get; set; } = 0;
         public double taxPercentage { get; set; } = 0;
+        public double discount { get; set; } = 0;
+        public double discountPercentage { get; set; } = 0;
         public double priceAfter { get; set; } = 0;
 
     }

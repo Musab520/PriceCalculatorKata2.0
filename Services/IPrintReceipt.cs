@@ -10,5 +10,6 @@ namespace PriceCalculatorKata2._0.Services
     {
         public Receipt receipt { get; set; }
         public void printReceiptTaxInfo(Receipt receipt);
+        public void printReceiptTaxAndDiscountInfo(Receipt receipt);
     }
 }
