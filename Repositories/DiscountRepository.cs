@@ -11,7 +11,7 @@ namespace PriceCalculatorKata2._0.Repositories
     {
         public List<Universal_Discount> uPC_Discounts = new List<Universal_Discount>
         {
-            new UPC_Discount(12345,0.07,true,true),new UPC_Discount(12346,4,false,true)
+            new UPC_Discount(12345,0.07,true,false),new UPC_Discount(12346,4,false,true)
         };
     }
 }

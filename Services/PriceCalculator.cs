@@ -40,6 +40,12 @@ namespace PriceCalculatorKata2._0.Services
                 finalPrice -= universalDiscountCalculator.amount;
                 finalPrice += taxCalculator.amount;
             }
+            CostRepository costRepository = new CostRepository();
+            List<Cost> costs=costRepository.costs.Select(cost => cost).ToList();
+            foreach (Cost cost in costs)
+            {
+                finalPrice += cost.IsPercent? cost.cost*product.price : cost.cost;
+            }
             return Math.Round(finalPrice,2);
         }
         public Receipt GetReceipt()
