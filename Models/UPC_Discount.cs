@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 namespace PriceCalculatorKata2._0.Models
 {
     
-    public class UPC_Discount
+    public class UPC_Discount : Universal_Discount
     {
-        public int upc { get; set; }
-        public double discount { get; set; }   
-        public bool isPercent { get; set; }
-        public UPC_Discount(int upc,double discount,bool isPercent)
+
+        public bool IsPercent { get; set; }
+        public UPC_Discount(int upc, double discount, bool isPercent, bool applyBeforeTaxes) : base(upc,discount, applyBeforeTaxes)
         {
-            this.upc = upc;
-            this.isPercent = isPercent;
-            this.discount = discount;
+            this.IsPercent = isPercent;
         }
+
+
     }
 }

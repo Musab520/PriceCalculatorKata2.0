@@ -25,11 +25,11 @@ namespace PriceCalculatorKata2._0.Services
         public void printReceiptReport(Receipt receipt)
         {
             Console.WriteLine($"Sample product: Title = “{receipt.product.Name}”, UPC={receipt.product.UPC}, price=${receipt.product.price}." +
-                $"Tax = {receipt.taxPercentage * 100} %, " +
+                $"\nTax = {receipt.taxPercentage * 100} %, " +
                 $"\nUniversal Discount = {receipt.discountPercentage * 100} %" +
-                $"\nUPC Discount = ${receipt.upcDiscount}"+
+                $"\nUPC Discount = ${Math.Round(receipt.upcDiscountPercentage*100,2)}"+
                 $"\nprice= ${receipt.priceAfter}" +
-                $"\nTotal discount= ${receipt.universalDiscount + receipt.upcDiscountPercentage}");
+                $"\nTotal discount= ${receipt.universalDiscount + receipt.upcDiscount}");
         }
     }
 }
