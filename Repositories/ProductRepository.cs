@@ -11,7 +11,7 @@ namespace PriceCalculatorKata2._0.Repositories
     {
        public List<Product> productList = new List<Product>
         {
-           new Product("Game1",12345,20.25),new Product("Game2",12346,18),new Product("Game3",12347,10)
+           new Product("Game1",12345,20.25,"GDP"),new Product("Game2",12346,18,"$"),new Product("Game3",12347,10,"E")
         };
     }
 }
