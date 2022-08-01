@@ -7,17 +7,20 @@ class Program{
     public static void Main()
     {
         ProductRepository productRepository = new ProductRepository();
+        UPCDiscountRepository uPCDiscountRepository = new UPCDiscountRepository();
+
         Product product = productRepository.productList[0];
         double taxPercentage = 0.2;
         double discountPercentage = 0.15;
         ICalculate taxCalculator = new TaxCalculator(taxPercentage, product.price);
-        ICalculate discountCalculator = new TaxCalculator(discountPercentage,  product.price);
-        IPriceCalculator priceCalculator = new PriceCalculator(taxCalculator,discountCalculator,product);
+        ICalculate discountCalculator = new UniversalDiscountCalculator(discountPercentage,  product.price);
+        ICalculate upcDiscountCalculator = new UPCDiscountCalculator(uPCDiscountRepository,product.UPC,product.price);
+        IPriceCalculator priceCalculator = new PriceCalculator(taxCalculator,discountCalculator,upcDiscountCalculator,product);
         IPrintReceipt receiptPrinter=new ReceiptPrinter();
-        receiptPrinter.printReceiptTaxInfo(priceCalculator.receipt);
+        receiptPrinter.printReceiptTaxInfo(priceCalculator.GetReceipt());
         Console.WriteLine("*****");
-        receiptPrinter.printReceiptTaxAndDiscountInfo(priceCalculator.receipt);
+        receiptPrinter.printReceiptTaxAndDiscountInfo(priceCalculator.GetReceipt());
         Console.WriteLine("*****");
-        receiptPrinter.printReceiptReport(priceCalculator.receipt);
+        receiptPrinter.printReceiptReport(priceCalculator.GetReceipt());
     }
 }
