@@ -10,29 +10,37 @@ namespace PriceCalculatorKata2._0.Services
     public class PriceCalculator : IPriceCalculator
     {
         public Product product { get; set; }
-        public ICalculateTax taxCalculator { get; set; }
+        public ICalculate taxCalculator { get; set; }
+        public ICalculate discountCalculator { get; set; }
         public double finalPrice { get; set; }
         public Receipt receipt { get { return GetReceipt(); } set { this.receipt = value; } }
 
 
-        public PriceCalculator(ICalculateTax taxCalculator,Product product)
+        public PriceCalculator(ICalculate taxCalculator,ICalculate discountCalculator,Product product)
         {
-            this.taxCalculator = taxCalculator; 
+            this.taxCalculator = taxCalculator;
+            this.discountCalculator = discountCalculator;
             this.product = product;
-            
+            finalPrice = product.price;
+
+
         }
-        private double CalculateFinalPrice()
+        public double CalculateFinalPrice()
         {
-            finalPrice += taxCalculator.priceAfterTax;
-            return finalPrice;
+            finalPrice += taxCalculator.amount;
+            finalPrice-= discountCalculator.amount;
+            return Math.Round(finalPrice,2);
         }
         public Receipt GetReceipt()
         {
             Receipt receipt = new Receipt();
-            receipt.taxPercentage = taxCalculator.taxPercentage;
-            receipt.tax = taxCalculator.taxAmount;
+            receipt.taxPercentage = taxCalculator.percentage;
+            receipt.tax = taxCalculator.amount;
+            receipt.discountPercentage = discountCalculator.percentage;
+            receipt.discount=discountCalculator.amount;
             receipt.priceAfter = CalculateFinalPrice();
             receipt.product = product;
+            finalPrice = product.price;
             return receipt;
         }
     }

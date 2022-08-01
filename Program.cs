@@ -8,9 +8,14 @@ class Program{
     {
         ProductRepository productRepository = new ProductRepository();
         Product product = productRepository.productList[0];
-        ICalculateTax taxCalculator = new TaxCalculator(0.2,product.price);
-        IPriceCalculator priceCalculator = new PriceCalculator(taxCalculator,product);
+        double taxPercentage = 0.2;
+        double discountPercentage = 0.15;
+        ICalculate taxCalculator = new TaxCalculator(taxPercentage, product.price);
+        ICalculate discountCalculator = new TaxCalculator(discountPercentage,  product.price);
+        IPriceCalculator priceCalculator = new PriceCalculator(taxCalculator,discountCalculator,product);
         IPrintReceipt receiptPrinter=new ReceiptPrinter();
         receiptPrinter.printReceiptTaxInfo(priceCalculator.receipt);
+        Console.WriteLine("*****");
+        receiptPrinter.printReceiptTaxAndDiscountInfo(priceCalculator.receipt);
     }
 }
