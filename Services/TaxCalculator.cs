@@ -19,12 +19,12 @@ namespace PriceCalculatorKata2._0.Services
         public double calculateAmount(double price)
         {
             double tax = (percentage) * price;
-            return Math.Round(tax,2);
+            return Math.Round(tax,4);
         }
 
         public double calculatePriceAfter(double price)
         {
-            return Math.Round(price + amount,2);
+            return Math.Round(price + amount,4);
         }
     }
 }

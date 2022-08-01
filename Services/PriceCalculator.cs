@@ -55,7 +55,7 @@ namespace PriceCalculatorKata2._0.Services
             {
                 finalPrice += cost.IsPercent? cost.cost*product.price : cost.cost;
             }
-            return Math.Round(finalPrice,2);
+            return Math.Round(finalPrice,4);
         }
         public Receipt GetReceipt()
         {
