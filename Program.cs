@@ -17,5 +17,7 @@ class Program{
         receiptPrinter.printReceiptTaxInfo(priceCalculator.receipt);
         Console.WriteLine("*****");
         receiptPrinter.printReceiptTaxAndDiscountInfo(priceCalculator.receipt);
+        Console.WriteLine("*****");
+        receiptPrinter.printReceiptReport(priceCalculator.receipt);
     }
 }
