@@ -15,7 +15,8 @@ class Program{
         ICalculate taxCalculator = new TaxCalculator(taxPercentage, product.price);
         ICalculate discountCalculator = new UniversalDiscountCalculator(discountPercentage,  product.price);
         ICalculate upcDiscountCalculator = new UPCDiscountCalculator(uPCDiscountRepository,product.UPC,product.price);
-        IPriceCalculator priceCalculator = new PriceCalculator(taxCalculator,discountCalculator,upcDiscountCalculator,product);
+        Cap cap = new Cap(0.2, true);
+        IPriceCalculator priceCalculator = new PriceCalculator(taxCalculator,discountCalculator,upcDiscountCalculator,product,cap);
         IPrintReceipt receiptPrinter=new ReceiptPrinter();
         receiptPrinter.printReceiptTaxInfo(priceCalculator.GetReceipt());
         Console.WriteLine("*****");

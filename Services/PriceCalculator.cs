@@ -16,28 +16,37 @@ namespace PriceCalculatorKata2._0.Services
         public ICalculate upcDiscountCalculator { get; set; }
         public bool applyDiscountsBefore { get; set; } = false;
         public double finalPrice { get; set; }
-
-        public PriceCalculator(ICalculate taxCalculator,ICalculate universalDiscountCalculator, ICalculate upcDiscountCalculator,Product product)
+        public Cap cap;
+        public PriceCalculator(ICalculate taxCalculator,ICalculate universalDiscountCalculator, ICalculate upcDiscountCalculator,Product product,Cap cap)
         {
             this.taxCalculator = taxCalculator;
             this.universalDiscountCalculator = universalDiscountCalculator;
             this.upcDiscountCalculator = upcDiscountCalculator;
             this.product = product;
+            this.cap = cap;
             finalPrice = product.price;
         }
         public double CalculateFinalPrice()
         {
+            double capDiscount= cap.IsPercent ? cap.cap*product.price : cap.cap;
+            double totalDiscounts = 0;
             if (upcDiscountCalculator.applyBeforeTaxes)
             {
-                finalPrice -= upcDiscountCalculator.amount;
+                finalPrice -= capDiscount > upcDiscountCalculator.amount ? upcDiscountCalculator.amount : 0;
+                totalDiscounts += upcDiscountCalculator.amount;
                 double tmpPrice=finalPrice;
-                finalPrice -= universalDiscountCalculator.calculateAmount(tmpPrice);
+                finalPrice -= capDiscount > upcDiscountCalculator.amount ? universalDiscountCalculator.calculateAmount(tmpPrice) : 0;
+                totalDiscounts += universalDiscountCalculator.calculateAmount(tmpPrice);
+                finalPrice = capDiscount>totalDiscounts ? finalPrice : tmpPrice-capDiscount;
+
                 finalPrice += taxCalculator.calculateAmount(tmpPrice);
             }
             else
             {
-                finalPrice -= upcDiscountCalculator.amount;
-                finalPrice -= universalDiscountCalculator.amount;
+                finalPrice -= capDiscount > upcDiscountCalculator.amount ? upcDiscountCalculator.amount : 0;
+                finalPrice -= capDiscount > upcDiscountCalculator.amount ? universalDiscountCalculator.amount : 0;
+                totalDiscounts += universalDiscountCalculator.amount + upcDiscountCalculator.amount;
+                finalPrice = capDiscount > totalDiscounts ? finalPrice : product.price-capDiscount;
                 finalPrice += taxCalculator.amount;
             }
             CostRepository costRepository = new CostRepository();
