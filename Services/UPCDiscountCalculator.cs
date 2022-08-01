@@ -13,20 +13,21 @@ namespace PriceCalculatorKata2._0.Services
         public double percentage { get; set; }
         public double amount { get; set; }
         public double priceAfter { get; set; }
-        public UPCDiscountCalculator(UPCDiscountRepository upcRepository, int upc,double price)
+        public bool applyBeforeTaxes { get; set; } = false;
+        public UPCDiscountCalculator(DiscountRepository upcRepository, int upc,double price)
         {
-            UPC_Discount? upcDiscount = checkForDiscount(upcRepository, upc);
+           UPC_Discount? upcDiscount = checkForDiscount(upcRepository, upc);
             if (upcDiscount!=null)
             {
-                    percentage = upcDiscount.isPercent ? upcDiscount.discount : 0;
-                    amount = !upcDiscount.isPercent ? upcDiscount.discount : calculateAmount(price);
+                    applyBeforeTaxes = upcDiscount.applyBeforeTaxes;
+                    percentage = upcDiscount.IsPercent ? upcDiscount.discount : 0;
+                    amount = !upcDiscount.IsPercent ? upcDiscount.discount : calculateAmount(price);
             }
             else
             {
                 percentage = 0;
                 amount = 0; 
             }
-
         }
         public double calculateAmount(double price)
         {
@@ -38,9 +39,9 @@ namespace PriceCalculatorKata2._0.Services
         {
             return Math.Round(price - amount, 2);
         }
-        public UPC_Discount? checkForDiscount(UPCDiscountRepository upcRepository,int upc)
+        public UPC_Discount? checkForDiscount(DiscountRepository upcRepository,int upc)
         {
-            UPC_Discount? upcDiscount = upcRepository.uPC_Discounts.Where(discount => discount.upc == upc).Select(discount=> discount).SingleOrDefault();
+            UPC_Discount? upcDiscount = (UPC_Discount?)upcRepository.uPC_Discounts.Where( discount => discount.upc == upc).Select(discount=> discount).SingleOrDefault();
             return upcDiscount;
 
         }

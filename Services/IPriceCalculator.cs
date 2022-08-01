@@ -11,6 +11,9 @@ namespace PriceCalculatorKata2._0.Services
     {
         public Product product { get; set; }
         public ICalculate taxCalculator { get; set; }
+        public ICalculate universalDiscountCalculator { get; set; }
+        public ICalculate upcDiscountCalculator { get; set; }
+        public bool applyDiscountsBefore { get; set; }
         public double finalPrice { get; set; }
         public double CalculateFinalPrice();
         public Receipt GetReceipt();

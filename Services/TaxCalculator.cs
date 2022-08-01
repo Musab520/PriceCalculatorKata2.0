@@ -10,7 +10,8 @@ namespace PriceCalculatorKata2._0.Services
         public double percentage { get; set; } = 0;
         public double amount { get; set; } = 0;
         public double priceAfter { get; set; } = 0;
-        public TaxCalculator(double percentage, double price)
+        public bool applyBeforeTaxes { get; set; }
+        public TaxCalculator(double percentage,double price)
         {
             this.percentage = percentage;
             amount = calculateAmount(price);
