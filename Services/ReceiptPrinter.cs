@@ -1,4 +1,5 @@
 ﻿using PriceCalculatorKata2._0.Models;
+using PriceCalculatorKata2._0.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,17 @@ namespace PriceCalculatorKata2._0.Services
         }
         public void printReceiptReport(Receipt receipt)
         {
+            string descriptions = "";
+            CostRepository costRepository = new CostRepository();
+            List<Cost> costs = costRepository.costs.Select(cost => cost).ToList();
+            foreach (Cost cost in costs)
+            {
+                descriptions +="\n"+cost.description +": "+cost.cost;
+            }
             Console.WriteLine($"Sample product: Title = “{receipt.product.Name}”, UPC={receipt.product.UPC}, price=${receipt.product.price}." +
                 $"\nTax = {receipt.taxPercentage * 100} %, " +
                 $"\nUniversal Discount = {receipt.discountPercentage * 100} %" +
+                $"" +descriptions+
                 $"\nUPC Discount = ${Math.Round(receipt.upcDiscountPercentage*100,2)}"+
                 $"\nprice= ${receipt.priceAfter}" +
                 $"\nTotal discount= ${receipt.universalDiscount + receipt.upcDiscount}");

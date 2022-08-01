@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PriceCalculatorKata2._0.Repositories
 {
-    public class DiscountRepository
+    public class CostRepository
     {
-        public List<Universal_Discount> uPC_Discounts = new List<Universal_Discount>
+        public List<Cost> costs = new List<Cost>
         {
-            new UPC_Discount(12345,0.07,true,false),new UPC_Discount(12346,4,false,true)
+            new Cost("Packaging Cost",0.01,true),new Cost("Transport Cost",2.2,false)
         };
     }
 }

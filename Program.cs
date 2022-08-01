@@ -10,7 +10,7 @@ class Program{
         DiscountRepository uPCDiscountRepository = new DiscountRepository();
 
         Product product = productRepository.productList[0];
-        double taxPercentage = 0.2;
+        double taxPercentage = 0.21;
         double discountPercentage = 0.15;
         ICalculate taxCalculator = new TaxCalculator(taxPercentage, product.price);
         ICalculate discountCalculator = new UniversalDiscountCalculator(discountPercentage,  product.price);
